@@ -8,6 +8,15 @@
 import SwiftUI
 
 struct IntroScreen: View {
+    let suggestions = [
+        "Exercise", "Read books", "Meditate",
+        "Plan meals", "Water plants", "Journal",
+        "Stretch for 15 mins", "Review goals before"
+    ]
+    let columns = [
+         GridItem(.adaptive(minimum: 100), spacing: 10) // Adaptive for dynamic width
+     ]
+    
     var body: some View {
         ZStack(
             alignment: .bottom
@@ -27,15 +36,22 @@ struct IntroScreen: View {
                     .bold()
                     .lineSpacing(10)
                 Spacer()
-                HStack{
-                    Text("Excecise")
-                        .padding(.horizontal, 24)
-                        .padding(.vertical, 10)
-                        .background(Color.gray.opacity(0.1))
-                        .foregroundColor(.black)
-                        .clipShape(CustomRoundedShape(cornerRadius: 8))
-                        .shadow(radius: 5)
-                }
+                
+                VStack(
+                    alignment: .leading
+                ){
+                    Text("RECOMMENDED")
+                        .font(.caption)
+                        .foregroundColor(.brown)
+                        .padding(.leading, 10)
+                    
+                    LazyVGrid(columns: columns, spacing: 10) {
+                        ForEach(suggestions, id: \.self) { text in
+                            CustomChips(text: text)
+                        }
+                    }
+                 }
+                
                 Button(action:{
                     print("Clickd me")
                 }){
@@ -50,12 +66,15 @@ struct IntroScreen: View {
                 }
                 .padding(30)
             }
+                .padding(.all)
+
+            }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color("#F9F5F4"))
 
         }
     }
-}
+
 
 
 #Preview {
