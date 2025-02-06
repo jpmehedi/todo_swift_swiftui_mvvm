@@ -8,18 +8,16 @@
 import SwiftUI
 
 struct IntroScreen: View {
+    
     let suggestions = [
         "Exercise", "Read books", "Meditate",
         "Plan meals", "Water plants", "Journal",
         "Stretch for 15 mins", "Review goals before"
     ]
-    let columns = [
-         GridItem(.adaptive(minimum: 100), spacing: 10) // Adaptive for dynamic width
-     ]
     
     var body: some View {
         ZStack(
-            alignment: .bottom
+            alignment: .center
         ){
             Image("IntroBackground")
                 .resizable()
@@ -27,14 +25,16 @@ struct IntroScreen: View {
                 .ignoresSafeArea()
             
             VStack(
-                alignment: .center
+                alignment: .leading
             ){
                 Spacer()
                 Text("Pick some new\nhabits to get started")
-                    .font(.title)
+                    .font(.system(size: 32))
                     .fontWeight(.black)
                     .bold()
                     .lineSpacing(10)
+                    .padding()
+                
                 Spacer()
                 
                 VStack(
@@ -44,13 +44,33 @@ struct IntroScreen: View {
                         .font(.caption)
                         .foregroundColor(.brown)
                         .padding(.leading, 10)
-                    
-                    LazyVGrid(columns: columns, spacing: 10) {
-                        ForEach(suggestions, id: \.self) { text in
-                            CustomChips(text: text)
+        
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack{
+                            CustomChips(text: suggestions[0])
+                            CustomChips(text: suggestions[1])
+                            CustomChips(text: suggestions[2])
                         }
                     }
+                    ScrollView(.horizontal, showsIndicators: false){
+                        HStack {
+                            CustomChips(text: suggestions[3])
+                            CustomChips(text: suggestions[4])
+                            CustomChips(text: suggestions[5])
+                        }
+                    }
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack{
+                            CustomChips(text: suggestions[6])
+                            CustomChips(text: suggestions[7])
+                        }
+                    }
+                
+                
                  }
+                .padding(.leading)
+                
+                Divider().frame(height: 15)
                 
                 Button(action:{
                     print("Clickd me")
@@ -60,18 +80,14 @@ struct IntroScreen: View {
                         .frame(maxWidth: .infinity)
                         .background(Color.black)
                         .foregroundColor(.white)
-                        .cornerRadius(10)
-                        
-                        
+                        .cornerRadius(8)
                 }
-                .padding(30)
+                .padding()
             }
-                .padding(.all)
-
+            .padding(.leading)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color("#F9F5F4"))
-
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color("#F9F5F4"))
         }
     }
 
@@ -82,11 +98,4 @@ struct IntroScreen: View {
 }
 
 
-struct CustomRoundedShape : Shape{
-    var cornerRadius : CGFloat
-    func path(in rect: CGRect) -> Path {
-        var path = Path();
-        path.addRoundedRect(in: rect, cornerSize: CGSize(width: cornerRadius, height: cornerRadius))
-        return path
-    }
-}
+
