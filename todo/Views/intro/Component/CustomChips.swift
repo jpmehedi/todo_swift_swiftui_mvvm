@@ -26,3 +26,12 @@ struct CustomChips : View {
 }
 
 
+struct CustomRoundedShape : Shape{
+    var cornerRadius : CGFloat
+    func path(in rect: CGRect) -> Path {
+        var path = Path();
+        path.addRoundedRect(in: rect, cornerSize: CGSize(width: cornerRadius, height: cornerRadius))
+        return path
+    }
+}
+
